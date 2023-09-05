@@ -56,6 +56,8 @@ class AddViewController: BaseViewController {
         view.addTarget(self, action: #selector(searchWebButtonClicked), for: .touchUpInside)
         return view
     }()
+    
+    var fullURL: String?
       
     override func viewDidLoad() {
         super.viewDidLoad() //안하는 경우 생기는 문제
@@ -67,11 +69,15 @@ class AddViewController: BaseViewController {
          
         let realm = try! Realm()
           
-        let task = DiaryTable(diaryTitle: titleTextField.text!, diaryDate: Date(), diaryContents: contentTextView.text, diaryPhoto: exampleURL)
+        let task = DiaryTable(diaryTitle: titleTextField.text!, diaryDate: Date(), diaryContents: contentTextView.text, diaryPhoto: fullURL)
         
         try! realm.write {
             realm.add(task)
             print("Realm Add Succeed")
+        }
+        
+        if userImageView.image != nil {
+            saveImageToDocument(fileName: "jack_\(task._id).jpg", image: userImageView.image!)
         }
          
         navigationController?.popViewController(animated: true)
@@ -88,6 +94,8 @@ class AddViewController: BaseViewController {
     @objc func searchWebButtonClicked() {
         let vc = SearchViewController()
         vc.didSelectItemHandler = { [weak self] value in
+            
+            self?.fullURL = value
             
             DispatchQueue.global().async {
                 if let url = URL(string: value), let data = try? Data(contentsOf: url ) {

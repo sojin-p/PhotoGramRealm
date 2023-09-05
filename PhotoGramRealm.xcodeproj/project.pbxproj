@@ -31,6 +31,8 @@
 		04BAEB3E2AA56506005A3A69 /* Realm in Frameworks */ = {isa = PBXBuildFile; productRef = 04BAEB3D2AA56506005A3A69 /* Realm */; };
 		04BAEB402AA56506005A3A69 /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 04BAEB3F2AA56506005A3A69 /* RealmSwift */; };
 		04BAEB422AA56A4C005A3A69 /* RealmModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04BAEB412AA56A4C005A3A69 /* RealmModel.swift */; };
+		04BAEB782AA6CB12005A3A69 /* FileManager+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04BAEB772AA6CB12005A3A69 /* FileManager+Extension.swift */; };
+		04BAEB7A2AA6F246005A3A69 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04BAEB792AA6F246005A3A69 /* DetailViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -57,6 +59,8 @@
 		04BAEB352AA550E9005A3A69 /* Photo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Photo.swift; sourceTree = "<group>"; };
 		04BAEB372AA55290005A3A69 /* SearchCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCollectionViewCell.swift; sourceTree = "<group>"; };
 		04BAEB412AA56A4C005A3A69 /* RealmModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmModel.swift; sourceTree = "<group>"; };
+		04BAEB772AA6CB12005A3A69 /* FileManager+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FileManager+Extension.swift"; sourceTree = "<group>"; };
+		04BAEB792AA6F246005A3A69 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -139,6 +143,7 @@
 		04BAEB0F2AA4BF5F005A3A69 /* Detail */ = {
 			isa = PBXGroup;
 			children = (
+				04BAEB792AA6F246005A3A69 /* DetailViewController.swift */,
 			);
 			path = Detail;
 			sourceTree = "<group>";
@@ -185,6 +190,7 @@
 			children = (
 				04BAEB242AA4C0DF005A3A69 /* Constants.swift */,
 				04BAEB262AA4C106005A3A69 /* Color.swift */,
+				04BAEB772AA6CB12005A3A69 /* FileManager+Extension.swift */,
 			);
 			path = Utility;
 			sourceTree = "<group>";
@@ -286,10 +292,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				04BAEB312AA550A7005A3A69 /* SearchViewController.swift in Sources */,
+				04BAEB782AA6CB12005A3A69 /* FileManager+Extension.swift in Sources */,
 				04BAEB1E2AA4C090005A3A69 /* BaseTableViewCell.swift in Sources */,
 				04BAEB422AA56A4C005A3A69 /* RealmModel.swift in Sources */,
 				04BAEB252AA4C0DF005A3A69 /* Constants.swift in Sources */,
 				04BAEAFD2AA4BF3F005A3A69 /* ViewController.swift in Sources */,
+				04BAEB7A2AA6F246005A3A69 /* DetailViewController.swift in Sources */,
 				04BAEB202AA4C0A3005A3A69 /* BaseCollectionViewCell.swift in Sources */,
 				04BAEB162AA4BFD0005A3A69 /* PhotoListTableViewCell.swift in Sources */,
 				04BAEB342AA550D2005A3A69 /* APIService.swift in Sources */,
