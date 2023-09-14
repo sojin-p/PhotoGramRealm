@@ -22,17 +22,19 @@ class HomeViewController: BaseViewController {
     
     var tasks: Results<DiaryTable>!
     
-    let realm = try! Realm()
+    let repository = DiaryTableRepository()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         //Realm Read
-        print(realm.configuration.fileURL)
+        //print(realm.configuration.fileURL)
         
-        tasks = realm.objects(DiaryTable.self).sorted(byKeyPath: "diaryDate", ascending: true)
+        tasks = repository.fetch()
          
+        repository.checkSchemaVersion()
         
+        print(tasks)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -64,28 +66,15 @@ class HomeViewController: BaseViewController {
     }
     
     @objc func backupButtonClicked() {
-        
+        navigationController?.pushViewController(BackupViewController(), animated: true)
     }
     
-    
     @objc func sortButtonClicked() {
-     /*
-      //1. 대소문자 구별 없음 - caseInsensitive
-      $0.diaryTitle.contains("제목", options: .caseInsensitive)
-
-      
-
-      */
     }
     
     @objc func filterButtonClicked() {
  
-        let result = realm.objects(DiaryTable.self).where {
-            //3. 사진이 있는 데이터만 불러오기 (diaryPhoto의 nil 여부 판단)
-            $0.diaryPhoto != nil
-        }
-        
-        tasks = result
+        tasks = repository.fetchFilter()
         tableView.reloadData()
         
     }
@@ -105,7 +94,7 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
         cell.diaryImageView.image = loadImageFromDocument(fileName: "jack_\(data._id).jpg")
         
         cell.titleLabel.text = data.diaryTitle
-        cell.contentLabel.text = data.diaryContents
+        cell.contentLabel.text = data.contents
         cell.dateLabel.text = "\(data.diaryDate)"
         
        

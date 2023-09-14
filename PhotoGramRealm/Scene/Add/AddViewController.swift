@@ -59,6 +59,8 @@ class AddViewController: BaseViewController {
     
     var fullURL: String?
       
+    let repository = DiaryTableRepository()
+    
     override func viewDidLoad() {
         super.viewDidLoad() //안하는 경우 생기는 문제
         
@@ -66,15 +68,10 @@ class AddViewController: BaseViewController {
     }
     
     @objc func saveButtonClicked() {
-         
-        let realm = try! Realm()
           
         let task = DiaryTable(diaryTitle: titleTextField.text!, diaryDate: Date(), diaryContents: contentTextView.text, diaryPhoto: fullURL)
         
-        try! realm.write {
-            realm.add(task)
-            print("Realm Add Succeed")
-        }
+        repository.createItem(task)
         
         if userImageView.image != nil {
             saveImageToDocument(fileName: "jack_\(task._id).jpg", image: userImageView.image!)

@@ -8,7 +8,7 @@
 import UIKit
 import SnapKit
 
-class PhotoListTableViewCell: BaseTableViewCell {
+final class PhotoListTableViewCell: BaseTableViewCell {
     
     let diaryImageView: PhotoImageView = {
         let view = PhotoImageView(frame: .zero)
@@ -54,7 +54,7 @@ class PhotoListTableViewCell: BaseTableViewCell {
     override func prepareForReuse() {
         super.prepareForReuse()
         
-        diaryImageView.image = nil 
+        diaryImageView.image = nil
     }
     
     override func configure() {

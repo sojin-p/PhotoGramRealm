@@ -7,14 +7,14 @@
 
 import UIKit
 
-class PhotoImageView: UIImageView {
+final class PhotoImageView: UIImageView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         
         contentMode = .scaleAspectFill
         clipsToBounds = true
-        layer.cornerRadius = Constants.Desgin.cornerRadius
+        layer.cornerRadius = Constants.Desgin.cornerRadius //
         layer.borderWidth = Constants.Desgin.borderWidth
         layer.borderColor = Constants.BaseColor.border
     }
