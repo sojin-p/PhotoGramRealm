@@ -9,25 +9,49 @@ import UIKit
 
 class DiaryCollectionViewController: BaseViewController {
     
+    let list = ["sdgnldfmlkaqsf", "123424646234", "asfadghfsh", "ㄴㅇㅎㄴㄹㅎㄴㄹㅁㄴㄹ"]
+    
     var collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout())
+    
+    var cellRegistration: UICollectionView.CellRegistration<UICollectionViewListCell, String>!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        view.addSubview(collectionView)
+        collectionView.delegate = self
+        collectionView.dataSource = self
+        collectionView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
+        
+        cellRegistration = UICollectionView.CellRegistration(handler: { cell, indexPath, itemIdentifier in
+            var content = UIListContentConfiguration.valueCell()
+            content.text = itemIdentifier
+            content.image = UIImage(systemName: "heart.fill")
+            content.secondaryText = "second"
+            cell.contentConfiguration = content
+        })
+        
     }
     
-    func layout() {
-        
+    static func layout() -> UICollectionViewLayout {
+        let configration = UICollectionLayoutListConfiguration(appearance: .grouped)
+        let layout = UICollectionViewCompositionalLayout.list(using: configration)
+        return layout
     }
 }
 
 extension DiaryCollectionViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        <#code#>
+        return list.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        <#code#>
+        let data = list[indexPath.row]
+        let cell = collectionView.dequeueConfiguredReusableCell(using: cellRegistration, for: indexPath, item: data)
+        
+        return cell
     }
 }

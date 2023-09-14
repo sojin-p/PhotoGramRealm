@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import SnapKit
 import RealmSwift //1.
 
 class RealmCollectionViewController: BaseViewController {
