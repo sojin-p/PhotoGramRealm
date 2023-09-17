@@ -7,106 +7,108 @@
 
 import UIKit
 
-struct Focus: Hashable {
-    
-    enum Section: CaseIterable {
-        case setting
-        case share
-        
-        var item: [Focus] {
-            switch self {
-            case .setting:
-                return [
-                    Focus(title: "방해 금지 모드", image: "star", secondText: "켬"),
-                    Focus(title: "수면", image: "heart", secondText: ""),
-                    Focus(title: "업무", image: "person", secondText: ""),
-                    Focus(title: "개인 시간", image: "pencil", secondText: "설정")
-                ]
-            case .share:
-                return [Focus(title: "모든 기기에서 공유", image: "", secondText: "")]
-            }
-        }
-    }
-    
-    var title: String
-    let image: String
-    let secondText: String
-    
-    private let id = UUID()
-}
-
 class SettingViewController: BaseViewController {
-    
-    var collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout())
-    
-    var dataSource: UICollectionViewDiffableDataSource<Focus.Section, Focus>!
-    
-    var color: [UIColor] = [.purple, .orange, .systemGreen, .systemBlue]
 
+    var collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout())
+
+    var dataSource: UICollectionViewDiffableDataSource<Setting.Section, Setting>!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
     }
-    
+
     override func configure() {
         view.addSubview(collectionView)
-        
-        title = "집중 모드"
+
+        title = "설정"
         navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
         configureDataSource()
-        
-        var snapshot = NSDiffableDataSourceSnapshot<Focus.Section, Focus>()
-        snapshot.appendSections([.setting, .share])
-        snapshot.appendItems(Focus.Section.setting.item, toSection: .setting)
-        snapshot.appendItems(Focus.Section.share.item, toSection: .share)
-        dataSource.apply(snapshot)
-        
     }
-    
+
     override func setConstraints() {
         collectionView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
     }
-    
+
+}
+
+extension SettingViewController {
+
+    private func configureDataSource() {
+
+        let cellRegistration = UICollectionView.CellRegistration<UICollectionViewListCell, Setting>  { cell, indexPath, itemIdentifier in
+            var content = UIListContentConfiguration.valueCell()
+            content.text = itemIdentifier.title
+            content.textProperties.color = .white
+            cell.contentConfiguration = content
+            
+            var backgroundConfig = UIBackgroundConfiguration.listGroupedCell()
+            backgroundConfig.backgroundColor = .black
+            cell.backgroundConfiguration = backgroundConfig
+        }
+
+        dataSource = UICollectionViewDiffableDataSource(collectionView: collectionView, cellProvider: { collectionView, indexPath, itemIdentifier in
+            let cell = collectionView.dequeueConfiguredReusableCell(using: cellRegistration, for: indexPath, item: itemIdentifier)
+            return cell
+
+        })
+        
+        var snapshot = NSDiffableDataSourceSnapshot<Setting.Section, Setting>()
+        snapshot.appendSections([.settings, .persnal, .other])
+        snapshot.appendItems(Setting.Section.settings.item, toSection: .settings)
+        snapshot.appendItems(Setting.Section.persnal.item, toSection: .persnal)
+        snapshot.appendItems(Setting.Section.other.item, toSection: .other)
+        dataSource.apply(snapshot)
+    }
+
+    static private func layout() -> UICollectionViewLayout {
+        var configuration = UICollectionLayoutListConfiguration(appearance: .grouped)
+        configuration.backgroundColor = .black
+        configuration.separatorConfiguration.color = .white
+
+        let layout = UICollectionViewCompositionalLayout.list(using: configuration)
+        return layout
+    }
+
 }
 
 extension SettingViewController {
     
-    private func configureDataSource() {
+    struct Setting: Hashable {
         
-        let cellRegistration = UICollectionView.CellRegistration<UICollectionViewListCell, Focus> { cell, indexPath, itemIdentifier in
-            var content = UIListContentConfiguration.valueCell()
-            content.text = itemIdentifier.title
-            content.textProperties.color = .white
-            content.secondaryText = itemIdentifier.secondText
-            content.secondaryTextProperties.color = .white
-            content.imageProperties.tintColor = self.color[indexPath.item]
-            content.image = UIImage(systemName: itemIdentifier.image)
-            cell.contentConfiguration = content
-            cell.accessories = [.disclosureIndicator(options: .init(tintColor: .darkGray))]
+        enum Section: CaseIterable {
+            case settings
+            case persnal
+            case other
             
-            var backgroundConfig = UIBackgroundConfiguration.listGroupedCell()
-            backgroundConfig.backgroundColor = UIColor(red: 0.1, green: 0.1, blue: 0.1, alpha: 1)
-            backgroundConfig.cornerRadius = 10
-            cell.backgroundConfiguration = backgroundConfig
-            
+            var item: [Setting] {
+                switch self {
+                case .settings:
+                    return [
+                        Setting(title: "공지사항"),
+                        Setting(title: "실험실"),
+                        Setting(title: "버전 정보")
+                    ]
+                case .persnal:
+                    return [
+                        Setting(title: "개인/보안"),
+                        Setting(title: "알림"),
+                        Setting(title: "채팅"),
+                        Setting(title: "멀티프로필")
+                    ]
+                case .other:
+                    return [
+                        Setting(title: "고객센터/도움말")
+                    ]
+                }
+            }
         }
         
-        
-        dataSource = UICollectionViewDiffableDataSource(collectionView: collectionView, cellProvider: { collectionView, indexPath, itemIdentifier in
-            let cell = collectionView.dequeueConfiguredReusableCell(using: cellRegistration, for: indexPath, item: itemIdentifier)
-            return cell
-            
-        })
+        let title: String
+        private let id = UUID()
         
     }
     
-    static private func layout() -> UICollectionViewLayout {
-        var configuration = UICollectionLayoutListConfiguration(appearance: .insetGrouped)
-        configuration.backgroundColor = .black
-        
-        let layout = UICollectionViewCompositionalLayout.list(using: configuration)
-        return layout
-    }
 }
